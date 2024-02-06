@@ -48,6 +48,17 @@ class DatosEntrenamiento extends ChangeNotifier {
     loadHeatMap();
   }
 
+  void eliminaEntrenamiento(String nombreEntrenamiento) {
+    Entrenamiento entrenamientoAdecuado =
+        getEntrenamientoByNombre(nombreEntrenamiento);
+
+    entrenamientos.remove(entrenamientoAdecuado);
+    notifyListeners();
+    db.guardarEnBD(entrenamientos);
+    // Cargar heat map
+    loadHeatMap();
+  }
+
   /// Añadir ejercicios a entrenamiento
   void addEjercicio(String nombreEntrenamiento, String nombreEjercicio,
       String peso, String repeticiones, String series) {

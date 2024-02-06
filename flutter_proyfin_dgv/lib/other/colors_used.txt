@@ -1,0 +1,6 @@
+
+Gris oscuro azulado -> Color(0xFF495867)
+Azul marino oscuro -> Color(0xFF577399)
+Azul marino claro -> Color(0xFFBDD5EA)
+Blanco fantasma -> Color(0xFFF7F7FF)
+Rojo -> Color(0xFFFE5F55)

@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
-
+import 'package:flutter_proyfin_dgv/componentes/chip_info_ejercicio.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 /// Clase que representa una Tile con la información de un ejercicio
 class EjercicioTile extends StatelessWidget {
@@ -12,7 +13,7 @@ class EjercicioTile extends StatelessWidget {
 
   void Function(bool?)? onTerminadoChanged;
 
-   EjercicioTile(
+  EjercicioTile(
       {super.key,
       required this.nombreEjercicio,
       required this.peso,
@@ -25,17 +26,44 @@ class EjercicioTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       // El titulo es el nombre del ejercicio obtenido por el nombre del entrenamiento
-      title: Text(nombreEjercicio),
+      title: Text(
+        nombreEjercicio,
+        style: GoogleFonts.quicksand(fontWeight: FontWeight.bold),
+      ),
 
       // Como contenido adicional, se muestran los demás atributos del entrenamiento
       subtitle: Row(
         children: [
-          Chip(label: Text("${peso}KG")),
-          Chip(label: Text("$repeticiones repeticiones")),
-          Chip(label: Text("$series series")),
+          ChipWithMargin(
+            child: Chip(
+              label: Text(
+                "${peso}KG",
+                style: GoogleFonts.quicksand(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          ChipWithMargin(
+            child: Chip(
+              label: Text(
+                "$repeticiones REPS",
+                style: GoogleFonts.quicksand(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          ChipWithMargin(
+            child: Chip(
+              label: Text(
+                "$series SETS",
+                style: GoogleFonts.quicksand(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
         ],
       ),
-      trailing: Checkbox(value: terminado, onChanged: (value) => onTerminadoChanged!(value) ,),
+      trailing: Checkbox(
+        value: terminado,
+        onChanged: (value) => onTerminadoChanged!(value),
+      ),
     );
   }
 }
