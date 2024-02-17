@@ -16,17 +16,7 @@ class DatosEntrenamiento extends ChangeNotifier {
   void iniciaListaEntrenamientos() {
     if (db.existenDatosPrevios()) {
       entrenamientos = db.entrenamientosFromDataBase();
-    } else {
-      // Si es la primera vez, carga datos de ejemplo
-      entrenamientos.add(Entrenamiento(nombre: "Empuje", ejercicios: [
-        Ejercicio(
-            nombre: "Press Banca", peso: "50", repeticiones: "6", series: "3"),
-      ]));
-      entrenamientos.add(Entrenamiento(nombre: "Pull", ejercicios: [
-        Ejercicio(nombre: "Remo", peso: "50", repeticiones: "6", series: "3"),
-      ]));
-      db.guardarEnBD(entrenamientos);
-    }
+    } 
 
     // Cargar heat map
     loadHeatMap();
@@ -48,6 +38,7 @@ class DatosEntrenamiento extends ChangeNotifier {
     loadHeatMap();
   }
 
+  /// Elimina un entrenamiento en la base de datos
   void eliminaEntrenamiento(String nombreEntrenamiento) {
     Entrenamiento entrenamientoAdecuado =
         getEntrenamientoByNombre(nombreEntrenamiento);
@@ -55,7 +46,19 @@ class DatosEntrenamiento extends ChangeNotifier {
     entrenamientos.remove(entrenamientoAdecuado);
     notifyListeners();
     db.guardarEnBD(entrenamientos);
-    // Cargar heat map
+
+  }
+
+  /// Elimina un ejercicio en la base de datos
+  void eliminaEjercicio(String nombreEjercicio, String nombreEntrenamiento){
+
+    Ejercicio ejercicioEncontrado = getEjercicioByEntrenamientoAndNombre(nombreEntrenamiento, nombreEjercicio);
+    ejercicioEncontrado.terminado = false;
+    Entrenamiento entrenamiento = getEntrenamientoByNombre(nombreEntrenamiento);
+    entrenamiento.ejercicios.remove(ejercicioEncontrado);
+    
+    notifyListeners();
+    db.guardarEnBD(entrenamientos);
     loadHeatMap();
   }
 

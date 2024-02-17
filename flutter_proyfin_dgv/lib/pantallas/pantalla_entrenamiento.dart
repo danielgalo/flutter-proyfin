@@ -51,38 +51,26 @@ class _PantallaEntrenamientoState extends State<PantallaEntrenamiento> {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            buildTextField(
-              ejercicioController,
-              "Ejercicio",
-              "Press banca, remo...",
-            ),
+            buildTextField(ejercicioController, "Ejercicio",
+                "Press banca, remo...", TextInputType.name),
 
             // Espacio
             const SizedBox(height: 5.0),
 
             buildTextField(
-              pesoController,
-              "Peso",
-              "Peso en KG",
-            ),
+                pesoController, "Peso", "Peso en KG", TextInputType.number),
 
             // Espacio
             const SizedBox(height: 5.0),
 
-            buildTextField(
-              repeticionesController,
-              "Repeticiones",
-              "Número de repeticiones",
-            ),
+            buildTextField(repeticionesController, "Repeticiones",
+                "Número de repeticiones", TextInputType.number),
 
             // Espacio
             const SizedBox(height: 5.0),
 
-            buildTextField(
-              seriesController,
-              "Series",
-              "Número de series",
-            ),
+            buildTextField(seriesController, "Series", "Número de series",
+                TextInputType.number),
           ],
         ),
         actions: [
@@ -106,10 +94,11 @@ class _PantallaEntrenamientoState extends State<PantallaEntrenamiento> {
   }
 
   /// Obtiene un textfield
-  TextField buildTextField(
-      TextEditingController txtController, String title, String hintText) {
+  TextField buildTextField(TextEditingController txtController, String title,
+      String hintText, TextInputType inputType) {
     return TextField(
       controller: txtController,
+      keyboardType: inputType,
       decoration: InputDecoration(
         labelText: title,
         labelStyle: const TextStyle(
@@ -124,15 +113,39 @@ class _PantallaEntrenamientoState extends State<PantallaEntrenamiento> {
 
   /// Guarda un ejercicio creado por el usuario
   void guardarEjercicio() {
-    Provider.of<DatosEntrenamiento>(context, listen: false).addEjercicio(
-      widget.nombreEntrenamiento,
-      ejercicioController.text,
-      pesoController.text,
-      repeticionesController.text,
-      seriesController.text,
-    );
-    Navigator.pop(context);
-    clearControllers();
+    if (ejercicioController.text.isEmpty ||
+        pesoController.text.isEmpty ||
+        repeticionesController.text.isEmpty ||
+        seriesController.text.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Error',
+              style: GoogleFonts.quicksand(
+                  fontWeight: FontWeight.bold, fontSize: 20)),
+          content: Text('Por favor, completa todos los campos.',
+              style: GoogleFonts.quicksand(fontSize: 16)),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('OK',
+                  style: GoogleFonts.quicksand(
+                      fontWeight: FontWeight.bold, fontSize: 20)),
+            ),
+          ],
+        ),
+      );
+    } else {
+      Provider.of<DatosEntrenamiento>(context, listen: false).addEjercicio(
+        widget.nombreEntrenamiento,
+        ejercicioController.text,
+        pesoController.text,
+        repeticionesController.text,
+        seriesController.text,
+      );
+      Navigator.pop(context);
+      clearControllers();
+    }
   }
 
   /// Cancela la creación de un ejercicio, cierra el diálogo
@@ -155,7 +168,7 @@ class _PantallaEntrenamientoState extends State<PantallaEntrenamiento> {
       backgroundColor: const Color(0xFFBDD5EA),
       appBar: _buildAppBar(),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const  Color(0xFFFE5F55),
+        backgroundColor: const Color(0xFFFE5F55),
         onPressed: nuevoEjercicio,
         child: const Icon(
           Icons.add,
@@ -186,10 +199,94 @@ class _PantallaEntrenamientoState extends State<PantallaEntrenamiento> {
       ),
     );
   }
-
   /// Crea un tile de ejercicio, con toda su información
-  Widget _buildExerciseTile(Ejercicio ejercicio) {
-    return Container(
+Widget _buildExerciseTile(Ejercicio ejercicio) {
+  bool _eliminar = false; // Estado para controlar la eliminación
+
+  return Dismissible(
+    key: UniqueKey(),
+    direction: DismissDirection.endToStart, // Se arrastra hacia la izquierda para mostrar el botón
+    background: Container(
+      alignment: Alignment.centerRight,
+      padding: const EdgeInsets.only(right: 20.0),
+      color: Colors.red,
+      child: const Icon(Icons.delete, color: Colors.white),
+    ),
+    onDismissed: (direction) {
+      if (_eliminar) {
+        // Ejecutar la acción de eliminación solo si el usuario confirmó
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Eliminar', style: GoogleFonts.quicksand(),),
+              content: Text('¿Estás seguro de que quieres eliminar este ejercicio?', style: GoogleFonts.quicksand()),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    // Cancelar la eliminación
+                    Navigator.of(context).pop();
+                    setState(() {
+                      _eliminar = false;
+                    });
+                  },
+                  child: Text('Cancelar', style: GoogleFonts.quicksand()),
+                ),
+                TextButton(
+                  onPressed: () {
+                    // Confirmar la eliminación
+                    Navigator.of(context).pop();
+                    // Aquí puedes ejecutar la acción de eliminar el ejercicio
+                    Provider.of<DatosEntrenamiento>(context, listen: false).eliminaEjercicio(ejercicio.nombre, widget.nombreEntrenamiento);
+
+                  },
+                  child: Text('Eliminar', style: GoogleFonts.quicksand(fontWeight: FontWeight.bold)),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        // Si el usuario cancela, no se elimina el elemento
+        setState(() {
+          _eliminar = false;
+        });
+      }
+    },
+    confirmDismiss: (direction) async {
+      // Mostrar el cuadro de diálogo de confirmación solo si el usuario desliza hacia la izquierda
+      if (direction == DismissDirection.endToStart) {
+        final result = await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Eliminar', style: GoogleFonts.quicksand(fontWeight: FontWeight.bold)),
+              content: const Text('¿Estás seguro de que quieres eliminar este ejercicio? Se borrará su progreso'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    // Cancelar la eliminación
+                    Navigator.of(context).pop(false);
+                  },
+                  child: Text('Cancelar', style: GoogleFonts.quicksand(fontWeight: FontWeight.bold)),
+                ),
+                TextButton(
+                  onPressed: () {
+                    // Confirmar la eliminación
+                    Navigator.of(context).pop(true);
+                  },
+                  child: Text('Eliminar', style: GoogleFonts.quicksand(fontWeight: FontWeight.bold)),
+                ),
+              ],
+            );
+          },
+        );
+        return result ?? false; // Si el usuario cierra el cuadro de diálogo sin seleccionar una opción, se cancela la eliminación
+      } else {
+        return false; // No confirmar la eliminación para otros gestos
+      }
+    },
+    child: Container(
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20.0),
@@ -212,6 +309,9 @@ class _PantallaEntrenamientoState extends State<PantallaEntrenamiento> {
         onTerminadoChanged: (val) =>
             checkBoxChanged(widget.nombreEntrenamiento, ejercicio.nombre),
       ),
-    );
-  }
+    ),
+  );
+}
+
+
 }

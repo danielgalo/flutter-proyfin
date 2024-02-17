@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_proyfin_dgv/pantallas/pantalla_inicio.dart';
 import 'package:flutter_proyfin_dgv/pantallas/pantalla_principal.dart';
 import 'package:flutter_proyfin_dgv/persistencia/datos_entrenamiento.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       create: (context) => DatosEntrenamiento(),
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: PantallaPrincipal(),
+        home: PantallaInicio(),
       ),
     );
   }

@@ -72,15 +72,37 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
 
   /// Guarda un entrenamiento
   guardarEntrenamiento() {
-    // Input del usuario, a través del controlador
-    String entrenamientoInput = nuevoNombreEntrenamientoController.text;
-    // Obtener los datos de entrenamiento, asignarle a su método de añadir entrenamiento el texto introducido por el usuario
-    Provider.of<DatosEntrenamiento>(context, listen: false)
-        .addEntrenamiento(entrenamientoInput);
-    // Cerrar el diálogo de añadir entrenamiento
-    Navigator.pop(context);
-    // Borra el texto del controlador
-    clearController();
+    // Si el nombre del entrenamiento está vacío mostrar mensaje de error
+    if (nuevoNombreEntrenamientoController.text.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Error',
+              style: GoogleFonts.quicksand(
+                  fontWeight: FontWeight.bold, fontSize: 20)),
+          content: Text('Se debe de proporcionar un nombre de entrenamiento.',
+              style: GoogleFonts.quicksand(fontSize: 16)),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('OK',
+                  style: GoogleFonts.quicksand(
+                      fontWeight: FontWeight.bold, fontSize: 20)),
+            ),
+          ],
+        ),
+      );
+    } else {
+      // Input del usuario, a través del controlador
+      String entrenamientoInput = nuevoNombreEntrenamientoController.text;
+      // Obtener los datos de entrenamiento, asignarle a su método de añadir entrenamiento el texto introducido por el usuario
+      Provider.of<DatosEntrenamiento>(context, listen: false)
+          .addEntrenamiento(entrenamientoInput);
+      // Cerrar el diálogo de añadir entrenamiento
+      Navigator.pop(context);
+      // Borra el texto del controlador
+      clearController();
+    }
   }
 
   eliminarEntrenamiento(String entrenamiento) {
@@ -122,7 +144,7 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
               "Gestión de Entrenamientos",
               style: GoogleFonts.quicksand(fontWeight: FontWeight.bold),
             ),
-            backgroundColor: Colors.black,
+            backgroundColor: const Color.fromARGB(125, 0, 0, 0),
           ),
           floatingActionButton: FloatingActionButton(
             backgroundColor: const Color(0xFFFE5F55),
@@ -155,6 +177,17 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
               ),
               // Contenedor, como hijo tendrá tantos entrenamientos como haya en la BD
               Container(
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(134, 0, 0, 0),
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color.fromARGB(169, 48, 48, 48),
+                      offset: Offset(5, 5),
+                      blurRadius: 15.0,
+                    ),
+                  ],
+                ),
                 padding: const EdgeInsets.all(10),
                 child: ListView.builder(
                   shrinkWrap: true,
@@ -172,7 +205,7 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
                         style:
                             GoogleFonts.quicksand(fontWeight: FontWeight.bold),
                       ),
-                      // ICONOS 
+                      // ICONOS
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -192,9 +225,28 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
                                       style: GoogleFonts.quicksand(
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    content: Text(
-                                      '¿Estás seguro de que deseas eliminar este entrenamiento?',
-                                      style: GoogleFonts.quicksand(),
+                                    content: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          '¿Estás seguro de que deseas eliminar este entrenamiento?',
+                                          style: GoogleFonts.quicksand(
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        // Espacio
+                                        const SizedBox(height: 10.0),
+                                        Text(
+                                          'Asegurate de no eliminar el entrenamiento el mismo día en el que lo has realizado.\n',
+                                          style: GoogleFonts.quicksand(
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                          '¡Si no perderás tu progreso!',
+                                          style: GoogleFonts.quicksand(
+                                            fontWeight: FontWeight.w800,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     actions: <Widget>[
                                       TextButton(
@@ -206,7 +258,7 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
                                             style: GoogleFonts.quicksand(
                                                 fontWeight: FontWeight.bold,
                                                 color:
-                                                    const Color(0xFFFE5F55))),
+                                                    const Color(0xFF577399))),
                                       ),
                                       TextButton(
                                         onPressed: () {
@@ -220,7 +272,7 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
                                           'Eliminar',
                                           style: GoogleFonts.quicksand(
                                               fontWeight: FontWeight.bold,
-                                              color: const Color(0xFFFE5F55)),
+                                              color: Colors.red),
                                         ),
                                       ),
                                     ],
