@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:flutter_proyfin_dgv/componentes/chip_info_ejercicio.dart';
-import 'package:flutter_proyfin_dgv/persistencia/datos_entrenamiento.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 /// Clase que representa una Tile con la información de un ejercicio

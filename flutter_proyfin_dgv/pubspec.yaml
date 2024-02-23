@@ -68,6 +68,8 @@ flutter:
     - assets/images/weightlifting.png
     - assets/images/musculo.png
     - assets/images/prensa-de-banco.png
+    - assets/images/cara-feliz.png
+    - assets/images/signo-de-github.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

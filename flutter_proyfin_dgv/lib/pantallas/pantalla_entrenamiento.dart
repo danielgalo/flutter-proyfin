@@ -199,13 +199,12 @@ class _PantallaEntrenamientoState extends State<PantallaEntrenamiento> {
       ),
     );
   }
+
   /// Crea un tile de ejercicio, con toda su información
 Widget _buildExerciseTile(Ejercicio ejercicio) {
-  bool _eliminar = false; // Estado para controlar la eliminación
-
   return Dismissible(
     key: UniqueKey(),
-    direction: DismissDirection.endToStart, // Se arrastra hacia la izquierda para mostrar el botón
+    direction: DismissDirection.endToStart,
     background: Container(
       alignment: Alignment.centerRight,
       padding: const EdgeInsets.only(right: 20.0),
@@ -213,78 +212,11 @@ Widget _buildExerciseTile(Ejercicio ejercicio) {
       child: const Icon(Icons.delete, color: Colors.white),
     ),
     onDismissed: (direction) {
-      if (_eliminar) {
-        // Ejecutar la acción de eliminación solo si el usuario confirmó
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Eliminar', style: GoogleFonts.quicksand(),),
-              content: Text('¿Estás seguro de que quieres eliminar este ejercicio?', style: GoogleFonts.quicksand()),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    // Cancelar la eliminación
-                    Navigator.of(context).pop();
-                    setState(() {
-                      _eliminar = false;
-                    });
-                  },
-                  child: Text('Cancelar', style: GoogleFonts.quicksand()),
-                ),
-                TextButton(
-                  onPressed: () {
-                    // Confirmar la eliminación
-                    Navigator.of(context).pop();
-                    // Aquí puedes ejecutar la acción de eliminar el ejercicio
-                    Provider.of<DatosEntrenamiento>(context, listen: false).eliminaEjercicio(ejercicio.nombre, widget.nombreEntrenamiento);
-
-                  },
-                  child: Text('Eliminar', style: GoogleFonts.quicksand(fontWeight: FontWeight.bold)),
-                ),
-              ],
-            );
-          },
-        );
-      } else {
-        // Si el usuario cancela, no se elimina el elemento
-        setState(() {
-          _eliminar = false;
-        });
-      }
+      Provider.of<DatosEntrenamiento>(context, listen: false)
+          .eliminaEjercicio(ejercicio.nombre, widget.nombreEntrenamiento);
     },
     confirmDismiss: (direction) async {
-      // Mostrar el cuadro de diálogo de confirmación solo si el usuario desliza hacia la izquierda
-      if (direction == DismissDirection.endToStart) {
-        final result = await showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Eliminar', style: GoogleFonts.quicksand(fontWeight: FontWeight.bold)),
-              content: const Text('¿Estás seguro de que quieres eliminar este ejercicio? Se borrará su progreso'),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    // Cancelar la eliminación
-                    Navigator.of(context).pop(false);
-                  },
-                  child: Text('Cancelar', style: GoogleFonts.quicksand(fontWeight: FontWeight.bold)),
-                ),
-                TextButton(
-                  onPressed: () {
-                    // Confirmar la eliminación
-                    Navigator.of(context).pop(true);
-                  },
-                  child: Text('Eliminar', style: GoogleFonts.quicksand(fontWeight: FontWeight.bold)),
-                ),
-              ],
-            );
-          },
-        );
-        return result ?? false; // Si el usuario cierra el cuadro de diálogo sin seleccionar una opción, se cancela la eliminación
-      } else {
-        return false; // No confirmar la eliminación para otros gestos
-      }
+      return true;
     },
     child: Container(
       decoration: BoxDecoration(
@@ -306,12 +238,11 @@ Widget _buildExerciseTile(Ejercicio ejercicio) {
         repeticiones: ejercicio.repeticiones,
         series: ejercicio.series,
         terminado: ejercicio.terminado,
-        onTerminadoChanged: (val) =>
-            checkBoxChanged(widget.nombreEntrenamiento, ejercicio.nombre),
+        onTerminadoChanged: (val) => checkBoxChanged(
+            widget.nombreEntrenamiento, ejercicio.nombre),
       ),
     ),
   );
 }
-
 
 }
