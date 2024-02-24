@@ -1,11 +1,24 @@
+/// Entidad ejercicio
 class Ejercicio {
+  /// Nombre del ejercicio
   String nombre;
-  String peso;
-  String repeticiones;
-  String series;
-  bool terminado;
-  bool eliminar; // Nuevo atributo para controlar si se debe eliminar el ejercicio
 
+  /// Peso del ejercicio
+  String peso;
+
+  /// Repeticiones del ejercicio
+  String repeticiones;
+
+  /// Series del ejercicio
+  String series;
+
+  /// Ejercicio terminado
+  bool terminado;
+
+  // Eliminar ejercicio
+  bool eliminar; 
+
+  /// Constructor
   Ejercicio({
     required this.nombre,
     required this.peso,

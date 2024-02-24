@@ -33,51 +33,71 @@ class PantallaCreditos extends StatelessWidget {
                 ),
               ),
               Text(
-                  "Estudiante de 2º de FPGS Desarrollo de Aplicaciones Multiplataforma",
+                  "Estudiante de FPGS Desarrollo de Aplicaciones Multiplataforma",
                   style: GoogleFonts.quicksand(
                     fontSize: 20,
                   ),
                   textAlign: TextAlign.center),
               const SizedBox(
-                height: 20, // Espacio entre el texto y la imagen
+                height: 20,
               ),
               SizedBox(
                 width: 200,
                 height: 200,
                 child: Image.asset(
                   "assets/images/cara-feliz.png",
-                  fit: BoxFit.cover, // Ajusta la imagen al contenedor
+                  fit: BoxFit.cover,
                 ),
               ),
               const SizedBox(
-                height: 20, // Espacio entre la imagen y el botón
+                height: 20,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: Image.asset(
-                      "assets/images/signo-de-github.png",
-                      fit: BoxFit.cover, // Ajusta la imagen al contenedor
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20, // Espacio entre la imagen y el botón
-                  ),
-                  Text("https://github.com/danielgalo/flutter-proyfin",
-                      style: GoogleFonts.quicksand(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      ),
-                      textAlign: TextAlign.center),
-                  const SizedBox(
-                    height: 20, // Espacio entre el texto y la imagen
-                  ),
-                ],
-              )
+              getContactChip(
+                  "github.com/danielgalo", "assets/images/signo-de-github.png"),
+              const SizedBox(
+                height: 20,
+              ),
+              getContactChip("linkedin.com/in/daniel-galo-vega-362350258/",
+                  "assets/images/logotipo-de-linkedin.png"),
+              const SizedBox(
+                height: 20,
+              ),
+              getContactChip("dgalovega@gmail.com",
+                  "assets/images/gmail.png"),
             ]))));
+  }
+
+  /// Obtiene un chip con una imagen de una red social / plataforma y su link
+  Row getContactChip(String link, String imagePath) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Padding(
+          padding:
+              const EdgeInsets.only(left: 20.0), // Agrega margen a la izquierda
+          child: SizedBox(
+            width: 40,
+            height: 40,
+            child: Image.asset(
+              imagePath,
+              fit: BoxFit.cover, // Ajusta la imagen al contenedor
+            ),
+          ),
+        ),
+        const SizedBox(
+          width: 20, // Espacio entre la imagen y el texto
+        ),
+        Text(link,
+            style: GoogleFonts.quicksand(
+              fontWeight: FontWeight.bold,
+              fontSize: 12,
+            ),
+            textAlign: TextAlign.center),
+        const SizedBox(
+          height: 20, // Espacio entre el texto y la imagen
+        ),
+      ],
+    );
   }
 }

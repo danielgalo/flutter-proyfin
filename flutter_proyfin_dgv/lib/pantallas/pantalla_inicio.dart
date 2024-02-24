@@ -3,6 +3,7 @@ import 'package:flutter_proyfin_dgv/componentes/custom_drawer.dart';
 import 'package:flutter_proyfin_dgv/pantallas/pantalla_principal.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+/// Pantalla de inicio, se muestra al abrir la aplicacion
 class PantallaInicio extends StatelessWidget {
   const PantallaInicio({super.key});
 

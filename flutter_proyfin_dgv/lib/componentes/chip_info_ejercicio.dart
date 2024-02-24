@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+/// Clase para añadir margen a los chips de entrenamiento
 class ChipWithMargin extends StatelessWidget {
   final Widget child;
   
@@ -7,7 +9,7 @@ class ChipWithMargin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const  EdgeInsets.only(right: 8.0), // Ajusta el margen según sea necesario
+      margin: const  EdgeInsets.only(right: 8.0), 
       child: child,
     );
   }

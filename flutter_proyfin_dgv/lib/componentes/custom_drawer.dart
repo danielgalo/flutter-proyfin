@@ -1,13 +1,15 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_proyfin_dgv/pantallas/pantalla_creditos.dart';
-import 'package:flutter_proyfin_dgv/pantallas/pantalla_principal.dart';
+import 'package:flutter_proyfin_dgv/pantallas/pantalla_inicio.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 /// Drawer personalizado para la aplicación
 class CustomDrawer extends StatelessWidget {
+  /// Context
   final BuildContext context;
 
+  /// Constructor
   const CustomDrawer(this.context, {super.key});
 
   @override
@@ -38,7 +40,7 @@ class CustomDrawer extends StatelessWidget {
                     height: 50, 
                     child: Image.asset(
                       "assets/images/musculo.png",
-                      fit: BoxFit.contain, // Ajusta el ajuste de la imagen
+                      fit: BoxFit.contain, 
                     ),
                   ),
                 ],
@@ -46,18 +48,18 @@ class CustomDrawer extends StatelessWidget {
             ),
           ),
 
-          // Ejercicio 9
+
           ListTile(
-            title: getItemText("Página principal", const Color(0xFF577399)),
+            title: getItemText("Inicio", const Color(0xFF577399)),
             onTap: () {
               // Cierra el Drawer al hacer clic en un elemento
               Navigator.pop(context);
 
-              // Navega a la PantallaPrincipal
+              // Navega a la clase PantallaInicio
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const PantallaPrincipal()),
+                    builder: (context) => const PantallaInicio()),
               );
             },
           ),

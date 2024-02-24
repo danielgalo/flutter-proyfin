@@ -3,9 +3,10 @@ import 'package:flutter_proyfin_dgv/modelos/ejercicio.dart';
 import 'package:flutter_proyfin_dgv/modelos/entrenamiento.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+/// Clase para manejar la base de datos
 class HiveDatabase {
   // Referenciar la box de Hive
-  final _myBox = Hive.box("entrenamiento_bd");
+  final _myBox = Hive.box("bbdd");
 
   // Comprobar si hay datos guardados, si no, guardar la fecha de inicio
   bool existenDatosPrevios() {

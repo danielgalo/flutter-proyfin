@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 import 'package:flutter_proyfin_dgv/fechas/fecha_hora.dart';
 
+/// Clase que representa el mapa en el que aparecen los días que hemos hecho o no algún ejercicio
 class MyHeatMap extends StatelessWidget {
 
+  /// Datos de cada dia (fecha, numero indica ejercicio hecho)
   final Map<DateTime, int>? datos;
+  /// Fecha de inicio del mapa
   final String fechaInicio;
 
+  /// Constructor
   const MyHeatMap({super.key, required this.datos, required this.fechaInicio});
 
   @override

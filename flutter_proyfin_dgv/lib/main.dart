@@ -8,12 +8,13 @@ void main() async {
   // Iniciar Hive
   await Hive.initFlutter();
   // Abrir una box de hive (La Base de Datos)
-  await Hive.openBox("entrenamiento_bd");
+  await Hive.openBox("bbdd");
 
 
   runApp(const MyApp());
 }
 
+/// Clase principal, lanza la pantalla de inicio
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

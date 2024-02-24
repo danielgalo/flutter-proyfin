@@ -10,13 +10,18 @@ class DatosEntrenamiento extends ChangeNotifier {
 
 // Ejemplo
   List<Entrenamiento> entrenamientos = [];
+  List<Entrenamiento> entrenamientosPrueba = [Entrenamiento(nombre: "Bienvenido", ejercicios: [Ejercicio(nombre: "Ejercicio", peso: "0", repeticiones: "0", series: "0")])];
 
   /// Si ya hay entrenamientos en la base de datos, devuelve la lista de entrenamientos existentes,
   /// si no, usar entrenamientos por defecto
   void iniciaListaEntrenamientos() {
+
+
     if (db.existenDatosPrevios()) {
       entrenamientos = db.entrenamientosFromDataBase();
-    } 
+    }  else {
+       db.guardarEnBD(entrenamientosPrueba);
+    }
 
     // Cargar heat map
     loadHeatMap();

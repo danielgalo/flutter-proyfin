@@ -70,6 +70,8 @@ flutter:
     - assets/images/prensa-de-banco.png
     - assets/images/cara-feliz.png
     - assets/images/signo-de-github.png
+    - assets/images/logotipo-de-linkedin.png
+    - assets/images/gmail.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

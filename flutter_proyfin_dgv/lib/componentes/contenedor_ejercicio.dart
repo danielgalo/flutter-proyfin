@@ -5,14 +5,25 @@ import 'package:google_fonts/google_fonts.dart';
 
 /// Clase que representa una Tile con la información de un ejercicio
 class EjercicioTile extends StatelessWidget {
+  /// Nombre del ejercicio
   final String nombreEjercicio;
+
+  /// Peso del ejercicio
   final String peso;
+
+  /// Repeticiones del ejercicio
   final String repeticiones;
+
+  /// Series del ejercicio
   final String series;
+
+  /// Ejercicio terminado
   final bool terminado;
 
+  /// Funcion para cuando se termine el ejercicio
   void Function(bool?)? onTerminadoChanged;
 
+  /// Constructor
   EjercicioTile(
       {super.key,
       required this.nombreEjercicio,
