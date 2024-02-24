@@ -178,15 +178,8 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
               // Contenedor, como hijo tendrá tantos entrenamientos como haya en la BD
               Container(
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(134, 0, 0, 0),
                   borderRadius: BorderRadius.circular(15),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color.fromARGB(169, 48, 48, 48),
-                      offset: Offset(5, 5),
-                      blurRadius: 15.0,
-                    ),
-                  ],
+       
                 ),
                 padding: const EdgeInsets.all(10),
                 child: ListView.builder(
